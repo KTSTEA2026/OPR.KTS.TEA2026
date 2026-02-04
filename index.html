@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<title>OPR SMK Kijal</title>
+<title>OPR SMK Kijal - Final</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -109,13 +109,14 @@ body{
 
 .photo-box{
   border:1px solid #000;
-  padding:3px;
+  overflow:hidden;
+  height:180px; /* tinggi tetap supaya muat 1 A4 */
 }
 
 .photo{
   width:100%;
-  height:auto;
-  object-fit:contain;
+  height:100%;
+  object-fit:cover; /* penuh tapi tak gedabak */
   display:block;
 }
 
