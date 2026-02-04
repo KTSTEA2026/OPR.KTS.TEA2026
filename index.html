@@ -2,116 +2,133 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<title>OPR Generator | SMK Kijal</title>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<title>OPR SMK Kijal</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#f0f0f0;
-}
-.container{
-    display:flex;
-    height:100vh;
-}
-.sidebar{
-    width:32%;
-    padding:12px;
-    background:#fff;
-    overflow:auto;
-}
-.sidebar h2{
-    margin-top:0;
-    font-size:16px;
-}
-.sidebar label{
-    font-size:12px;
-    font-weight:bold;
-}
-.sidebar input,
-.sidebar textarea{
-    width:100%;
-    font-size:11px;
-    margin-bottom:6px;
-    padding:4px;
-}
-.sidebar button{
-    width:100%;
-    margin-top:6px;
-    padding:6px;
-    font-size:12px;
-    cursor:pointer;
-}
-.preview-wrapper{
-    flex:1;
-    padding:10px;
-    overflow:auto;
-}
-.a4{
-    width:210mm;
-    height:297mm;
-    background:white;
-    margin:auto;
-    padding:12mm;
-    box-sizing:border-box;
-    font-size:11px;
-}
-.header{
-    display:flex;
-    align-items:center;
-    border-bottom:1px solid #000;
-    padding-bottom:4px;
-}
-.header img{
-    height:45px;
-    margin-right:10px;
-}
-.header div{
-    font-size:11px;
-}
-.title{
-    text-align:center;
-    font-weight:bold;
-    margin:6px 0;
-}
-.section{
-    margin-bottom:6px;
-}
-.section b{
-    display:block;
-    margin-bottom:2px;
-}
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 8px;
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#eee;
 }
 
-.photo-box {
-  border: 1px solid #000;
-  padding: 2px;
+.container{
+  display:flex;
+  height:100vh;
 }
-.photo-box img {
-  width: 100%;
-  height: auto;        /* AUTO ikut gambar */
-  object-fit: contain; /* TAK POTONG gambar */
-  display: block;
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:320px;
+  background:#fff;
+  padding:10px;
+  overflow:auto;
+  border-right:2px solid #ccc;
 }
-.signature{
-    display:flex;
-    justify-content:space-between;
-    margin-top:20px;
+
+.sidebar label{
+  font-size:12px;
+  font-weight:bold;
 }
-.signature div{
-    width:45%;
-    text-align:center;
+
+.sidebar input,
+.sidebar textarea{
+  width:100%;
+  font-size:12px;
+  margin-bottom:6px;
 }
-@media print{
-    body{background:white;}
-    .sidebar{display:none;}
-    .preview-wrapper{padding:0;}
+
+.sidebar button{
+  width:100%;
+  margin-top:5px;
+  padding:6px;
+  font-weight:bold;
+}
+
+/* ===== PREVIEW ===== */
+.preview-wrap{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:10px;
+  overflow:auto;
+}
+
+#report{
+  width:794px;
+  min-height:1123px;
+  background:#fff;
+  padding:15px;
+  box-sizing:border-box;
+  font-size:11px;
+}
+
+/* ===== HEADER ===== */
+.header{
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid #000;
+  padding-bottom:5px;
+  margin-bottom:6px;
+}
+
+.header img{
+  width:60px;
+  margin-right:10px;
+}
+
+.header h3{
+  margin:0;
+  font-size:13px;
+}
+
+.header p{
+  margin:0;
+  font-size:11px;
+}
+
+/* ===== SECTION ===== */
+.section{
+  margin-bottom:5px;
+}
+
+.section b{
+  display:inline-block;
+  width:120px;
+}
+
+/* ===== PHOTOS ===== */
+.photo-grid{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:10px;
+  margin-top:6px;
+}
+
+.photo-box{
+  border:1px solid #000;
+  padding:3px;
+}
+
+.photo{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
+
+/* ===== SIGN ===== */
+.sign{
+  display:flex;
+  justify-content:space-between;
+  margin-top:25px;
+}
+
+.sign div{
+  width:45%;
+  text-align:center;
 }
 </style>
 </head>
@@ -119,141 +136,124 @@ body{
 <body>
 <div class="container">
 
-<!-- SIDEBAR -->
+<!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
-<h2>Maklumat Program</h2>
 
 <label>Nama Program</label>
-<input oninput="update('program',this.value)">
+<input oninput="upd('prog',this.value)">
 
 <label>Anjuran</label>
-<input oninput="update('anjuran',this.value)">
+<input oninput="upd('anjur',this.value)">
 
 <label>Tarikh</label>
-<input oninput="update('tarikh',this.value)">
+<input oninput="upd('tarikh',this.value)">
 
 <label>Masa</label>
-<input oninput="update('masa',this.value)">
+<input oninput="upd('masa',this.value)">
 
 <label>Tempat</label>
-<input oninput="update('tempat',this.value)">
+<input oninput="upd('tempat',this.value)">
 
 <label>Sasaran</label>
-<input oninput="update('sasaran',this.value)">
+<input oninput="upd('sasaran',this.value)">
 
 <label>Objektif</label>
-<textarea rows="2" oninput="update('objektif',this.value)"></textarea>
+<textarea rows="2" oninput="upd('obj',this.value)"></textarea>
 
 <label>Aktiviti</label>
-<textarea rows="2" oninput="update('aktiviti',this.value)"></textarea>
+<textarea rows="2" oninput="upd('akt',this.value)"></textarea>
 
 <label>Kekuatan</label>
-<textarea rows="2" oninput="update('kekuatan',this.value)"></textarea>
+<textarea rows="2" oninput="upd('kuat',this.value)"></textarea>
 
 <label>Cadangan Penambahbaikan</label>
-<textarea rows="2" oninput="update('cadangan',this.value)"></textarea>
+<textarea rows="2" oninput="upd('cad',this.value)"></textarea>
 
-<label>Foto Aktiviti (4)</label>
+<label>Gambar Aktiviti (4)</label>
 <input type="file" accept="image/*" onchange="loadImg(event,0)">
 <input type="file" accept="image/*" onchange="loadImg(event,1)">
 <input type="file" accept="image/*" onchange="loadImg(event,2)">
 <input type="file" accept="image/*" onchange="loadImg(event,3)">
 
 <label>Disediakan Oleh (Nama)</label>
-<input oninput="updateCaps('sedia',this.value)">
-
-<label>Jawatan Disediakan Oleh</label>
-<input oninput="update('jawatanSedia',this.value)">
+<input oninput="updCaps('dNama',this.value)">
+<label>Jawatan</label>
+<input oninput="updCaps('dJaw',this.value)">
 
 <label>Disahkan Oleh (Nama)</label>
-<input oninput="updateCaps('sah',this.value)">
+<input oninput="updCaps('sNama',this.value)">
+<label>Jawatan</label>
+<input oninput="updCaps('sJaw',this.value)">
 
-<label>Jawatan Disahkan Oleh</label>
-<input oninput="update('jawatanSah',this.value)">
+<button onclick="window.print()">Cetak PDF</button>
+<button onclick="saveImg()">Simpan Sebagai Gambar</button>
+<button onclick="location.reload()">Padam Semua</button>
 
-<button onclick="window.print()">🖨 Cetak PDF</button>
-<button onclick="saveImage()">📷 Simpan Sebagai Gambar</button>
-<button onclick="location.reload()">🗑 Padam Semua</button>
 </div>
 
-<!-- PREVIEW -->
-<div class="preview-wrapper">
-<div class="a4" id="report">
-
-
+<!-- ===== PREVIEW ===== -->
+<div class="preview-wrap">
+<div id="report">
 
 <div class="header">
-<img src="logo-smk-kijal.png" alt="Logo Sekolah">
+<img src="https://i.imgur.com/Btj6hHO.jpeg">
 <div>
-<b>SEKOLAH MENENGAH KEBANGSAAN KIJAL</b><br>
-24100 Kemaman, Terengganu
+<h3>SEKOLAH MENENGAH KEBANGSAAN KIJAL</h3>
+<p>24100 Kemaman, Terengganu</p>
 </div>
 </div>
 
-<div class="title">LAPORAN PROGRAM</div>
+<div class="section"><b>Nama Program</b>: <span id="prog"></span></div>
+<div class="section"><b>Anjuran</b>: <span id="anjur"></span></div>
+<div class="section"><b>Tarikh</b>: <span id="tarikh"></span></div>
+<div class="section"><b>Masa</b>: <span id="masa"></span></div>
+<div class="section"><b>Tempat</b>: <span id="tempat"></span></div>
+<div class="section"><b>Sasaran</b>: <span id="sasaran"></span></div>
+<div class="section"><b>Objektif</b>: <span id="obj"></span></div>
+<div class="section"><b>Aktiviti</b>: <span id="akt"></span></div>
+<div class="section"><b>Kekuatan</b>: <span id="kuat"></span></div>
+<div class="section"><b>Cadangan</b>: <span id="cad"></span></div>
 
-<div class="section"><b>Nama Program:</b> <span id="program"></span></div>
-<div class="section"><b>Anjuran:</b> <span id="anjuran"></span></div>
-<div class="section"><b>Tarikh:</b> <span id="tarikh"></span></div>
-<div class="section"><b>Masa:</b> <span id="masa"></span></div>
-<div class="section"><b>Tempat:</b> <span id="tempat"></span></div>
-<div class="section"><b>Sasaran:</b> <span id="sasaran"></span></div>
-
-<div class="section"><b>Objektif</b><span id="objektif"></span></div>
-<div class="section"><b>Aktiviti</b><span id="aktiviti"></span></div>
-<div class="section"><b>Kekuatan</b><span id="kekuatan"></span></div>
-<div class="section"><b>Cadangan Penambahbaikan</b><span id="cadangan"></span></div>
-
-<div class="section">
-<b>Gambar Aktiviti</b>
-<div class="photos">
-<img id="img0">
-<img id="img1">
-<img id="img2">
-<img id="img3">
-</div>
+<div class="photo-grid">
+<div class="photo-box"><img class="photo"></div>
+<div class="photo-box"><img class="photo"></div>
+<div class="photo-box"><img class="photo"></div>
+<div class="photo-box"><img class="photo"></div>
 </div>
 
-<div class="signature">
+<div class="sign">
 <div>
-Disediakan Oleh:<br><br>
-<b><span id="sedia"></span></b><br>
-<span id="jawatanSedia"></span>
+<p>Disediakan Oleh,</p><br><br>
+<b id="dNama"></b><br>
+<span id="dJaw"></span>
 </div>
 <div>
-Disahkan Oleh:<br><br>
-<b><span id="sah"></span></b><br>
-<span id="jawatanSah"></span>
+<p>Disahkan Oleh,</p><br><br>
+<b id="sNama"></b><br>
+<span id="sJaw"></span>
 </div>
 </div>
 
 </div>
 </div>
+
 </div>
 
 <script>
-// Auto update preview
-function update(id,val){ document.getElementById(id).innerText=val; }
-function updateCaps(id,val){ document.getElementById(id).innerText=val.toUpperCase(); }
+function upd(id,val){document.getElementById(id).innerText=val;}
+function updCaps(id,val){document.getElementById(id).innerText=val.toUpperCase();}
 function loadImg(e,i){
-    const r=new FileReader();
-    r.onload=()=>document.getElementById('img'+i).src=r.result;
-    r.readAsDataURL(e.target.files[0]);
+  document.querySelectorAll('.photo')[i].src=URL.createObjectURL(e.target.files[0]);
 }
-function saveImage(){
-    html2canvas(document.getElementById("report"),{scale:2}).then(c=>{
-        const a=document.createElement("a");
-        a.download="OPR-SMK-KIJAL.png";
-        a.href=c.toDataURL();
-        a.click();
-    });
+function saveImg(){
+  html2canvas(document.getElementById('report')).then(c=>{
+    let a=document.createElement('a');
+    a.download='OPR-SMK-KIJAL.png';
+    a.href=c.toDataURL();
+    a.click();
+  });
 }
-
-// Auto Nombor Rujukan & Tarikh
-
 </script>
 
 </body>
 </html>
-
-
