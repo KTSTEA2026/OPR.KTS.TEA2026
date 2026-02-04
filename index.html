@@ -174,7 +174,7 @@ body{
 <div class="preview-wrapper">
 <div class="a4" id="report">
 
-<div><b>Nombor Rujukan: <span id="rujukan"></span></b></div>
+
 
 <div class="header">
 <img src="logo-smk-kijal.png" alt="Logo Sekolah">
@@ -188,7 +188,7 @@ body{
 
 <div class="section"><b>Nama Program:</b> <span id="program"></span></div>
 <div class="section"><b>Anjuran:</b> <span id="anjuran"></span></div>
-<div class="section"><b>Tarikh:</b> <span id="tarikh"></span> (<span id="tarikhAuto"></span>)</div>
+<div class="section"><b>Tarikh:</b> <span id="tarikh"></span></div>
 <div class="section"><b>Masa:</b> <span id="masa"></span></div>
 <div class="section"><b>Tempat:</b> <span id="tempat"></span></div>
 <div class="section"><b>Sasaran:</b> <span id="sasaran"></span></div>
@@ -244,19 +244,9 @@ function saveImage(){
 }
 
 // Auto Nombor Rujukan & Tarikh
-function autoRujukan(){
-    const now=new Date();
-    const yyyy=now.getFullYear();
-    const mm=("0"+(now.getMonth()+1)).slice(-2);
-    const dd=("0"+now.getDate()).slice(-2);
-    const hh=("0"+now.getHours()).slice(-2);
-    const min=("0"+now.getMinutes()).slice(-2);
-    const ruj="OPR/"+yyyy+mm+dd+"/"+hh+min;
-    document.getElementById("rujukan").innerText=ruj;
-    document.getElementById("tarikhAuto").innerText=dd+"/"+mm+"/"+yyyy;
-}
-autoRujukan();
+
 </script>
 
 </body>
 </html>
+
