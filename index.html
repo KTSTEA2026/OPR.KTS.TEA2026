@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>OPR Generator | SMK Kijal</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f0f0f0;
+}
+.container{
+    display:flex;
+    height:100vh;
+}
+.sidebar{
+    width:32%;
+    padding:12px;
+    background:#fff;
+    overflow:auto;
+}
+.sidebar h2{
+    margin-top:0;
+    font-size:16px;
+}
+.sidebar label{
+    font-size:12px;
+    font-weight:bold;
+}
+.sidebar input,
+.sidebar textarea{
+    width:100%;
+    font-size:11px;
+    margin-bottom:6px;
+    padding:4px;
+}
+.sidebar button{
+    width:100%;
+    margin-top:6px;
+    padding:6px;
+    font-size:12px;
+    cursor:pointer;
+}
+.preview-wrapper{
+    flex:1;
+    padding:10px;
+    overflow:auto;
+}
+.a4{
+    width:210mm;
+    height:297mm;
+    background:white;
+    margin:auto;
+    padding:12mm;
+    box-sizing:border-box;
+    font-size:11px;
+}
+.header{
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid #000;
+    padding-bottom:4px;
+}
+.header img{
+    height:45px;
+    margin-right:10px;
+}
+.header div{
+    font-size:11px;
+}
+.title{
+    text-align:center;
+    font-weight:bold;
+    margin:6px 0;
+}
+.section{
+    margin-bottom:6px;
+}
+.section b{
+    display:block;
+    margin-bottom:2px;
+}
+.photos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px;
+}
+.photos img{
+    width:100%;
+    height:90px;
+    object-fit:cover;
+    border:1px solid #000;
+}
+.signature{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+.signature div{
+    width:45%;
+    text-align:center;
+}
+@media print{
+    body{background:white;}
+    .sidebar{display:none;}
+    .preview-wrapper{padding:0;}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<h2>Maklumat Program</h2>
+
+<label>Nama Program</label>
+<input oninput="update('program',this.value)">
+
+<label>Anjuran</label>
+<input oninput="update('anjuran',this.value)">
+
+<label>Tarikh</label>
+<input oninput="update('tarikh',this.value)">
+
+<label>Masa</label>
+<input oninput="update('masa',this.value)">
+
+<label>Tempat</label>
+<input oninput="update('tempat',this.value)">
+
+<label>Sasaran</label>
+<input oninput="update('sasaran',this.value)">
+
+<label>Objektif</label>
+<textarea rows="2" oninput="update('objektif',this.value)"></textarea>
+
+<label>Aktiviti</label>
+<textarea rows="2" oninput="update('aktiviti',this.value)"></textarea>
+
+<label>Kekuatan</label>
+<textarea rows="2" oninput="update('kekuatan',this.value)"></textarea>
+
+<label>Cadangan Penambahbaikan</label>
+<textarea rows="2" oninput="update('cadangan',this.value)"></textarea>
+
+<label>Foto Aktiviti (4)</label>
+<input type="file" accept="image/*" onchange="loadImg(event,0)">
+<input type="file" accept="image/*" onchange="loadImg(event,1)">
+<input type="file" accept="image/*" onchange="loadImg(event,2)">
+<input type="file" accept="image/*" onchange="loadImg(event,3)">
+
+<label>Disediakan Oleh (Nama)</label>
+<input oninput="updateCaps('sedia',this.value)">
+
+<label>Jawatan Disediakan Oleh</label>
+<input oninput="update('jawatanSedia',this.value)">
+
+<label>Disahkan Oleh (Nama)</label>
+<input oninput="updateCaps('sah',this.value)">
+
+<label>Jawatan Disahkan Oleh</label>
+<input oninput="update('jawatanSah',this.value)">
+
+<button onclick="window.print()">🖨 Cetak PDF</button>
+<button onclick="saveImage()">📷 Simpan Sebagai Gambar</button>
+<button onclick="location.reload()">🗑 Padam Semua</button>
+</div>
+
+<!-- PREVIEW -->
+<div class="preview-wrapper">
+<div class="a4" id="report">
+
+<div><b>Nombor Rujukan: <span id="rujukan"></span></b></div>
+
+<div class="header">
+<img src="logo-smk-kijal.png" alt="Logo Sekolah">
+<div>
+<b>SEKOLAH MENENGAH KEBANGSAAN KIJAL</b><br>
+24100 Kemaman, Terengganu
+</div>
+</div>
+
+<div class="title">LAPORAN PROGRAM</div>
+
+<div class="section"><b>Nama Program:</b> <span id="program"></span></div>
+<div class="section"><b>Anjuran:</b> <span id="anjuran"></span></div>
+<div class="section"><b>Tarikh:</b> <span id="tarikh"></span> (<span id="tarikhAuto"></span>)</div>
+<div class="section"><b>Masa:</b> <span id="masa"></span></div>
+<div class="section"><b>Tempat:</b> <span id="tempat"></span></div>
+<div class="section"><b>Sasaran:</b> <span id="sasaran"></span></div>
+
+<div class="section"><b>Objektif</b><span id="objektif"></span></div>
+<div class="section"><b>Aktiviti</b><span id="aktiviti"></span></div>
+<div class="section"><b>Kekuatan</b><span id="kekuatan"></span></div>
+<div class="section"><b>Cadangan Penambahbaikan</b><span id="cadangan"></span></div>
+
+<div class="section">
+<b>Gambar Aktiviti</b>
+<div class="photos">
+<img id="img0">
+<img id="img1">
+<img id="img2">
+<img id="img3">
+</div>
+</div>
+
+<div class="signature">
+<div>
+Disediakan Oleh:<br><br>
+<b><span id="sedia"></span></b><br>
+<span id="jawatanSedia"></span>
+</div>
+<div>
+Disahkan Oleh:<br><br>
+<b><span id="sah"></span></b><br>
+<span id="jawatanSah"></span>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+// Auto update preview
+function update(id,val){ document.getElementById(id).innerText=val; }
+function updateCaps(id,val){ document.getElementById(id).innerText=val.toUpperCase(); }
+function loadImg(e,i){
+    const r=new FileReader();
+    r.onload=()=>document.getElementById('img'+i).src=r.result;
+    r.readAsDataURL(e.target.files[0]);
+}
+function saveImage(){
+    html2canvas(document.getElementById("report"),{scale:2}).then(c=>{
+        const a=document.createElement("a");
+        a.download="OPR-SMK-KIJAL.png";
+        a.href=c.toDataURL();
+        a.click();
+    });
+}
+
+// Auto Nombor Rujukan & Tarikh
+function autoRujukan(){
+    const now=new Date();
+    const yyyy=now.getFullYear();
+    const mm=("0"+(now.getMonth()+1)).slice(-2);
+    const dd=("0"+now.getDate()).slice(-2);
+    const hh=("0"+now.getHours()).slice(-2);
+    const min=("0"+now.getMinutes()).slice(-2);
+    const ruj="OPR/"+yyyy+mm+dd+"/"+hh+min;
+    document.getElementById("rujukan").innerText=ruj;
+    document.getElementById("tarikhAuto").innerText=dd+"/"+mm+"/"+yyyy;
+}
+autoRujukan();
+</script>
+
+</body>
+</html>
